@@ -1,0 +1,29 @@
+{
+  "name": "ayd-economy-bot",
+  "version": "1.0.0",
+  "description": "Discord bot with economy system featuring gambling, businesses, loans, and more",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "deploy": "node deploy-commands.js",
+    "delete": "node delete-commands.js"
+  },
+  "keywords": [
+    "discord",
+    "bot",
+    "economy",
+    "gambling",
+    "business"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^14.14.0",
+    "better-sqlite3": "^9.2.2",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
