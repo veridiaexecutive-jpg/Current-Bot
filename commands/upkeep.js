@@ -1,6 +1,8 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const { getBalance, calculateUpkeepCost, isCitizen, payUpkeep, getLastUpkeep } = require("../database/economy");
 
+const CITIZEN_ROLE_ID = "1483432829491609620";
+
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("upkeep")
@@ -60,7 +62,24 @@ async function handlePay(interaction, userId) {
     )
     .setFooter({ text: "Upkeep must be paid every 48 hours to remain a citizen" });
 
+  await setCitizenRole(interaction, true);
   await interaction.reply({ embeds: [embed] });
+}
+
+async function setCitizenRole(interaction, citizen) {
+  if (!interaction.member?.roles) return;
+
+  const hasRole = interaction.member.roles.cache.has(CITIZEN_ROLE_ID);
+
+  try {
+    if (citizen && !hasRole) {
+      await interaction.member.roles.add(CITIZEN_ROLE_ID);
+    } else if (!citizen && hasRole) {
+      await interaction.member.roles.remove(CITIZEN_ROLE_ID);
+    }
+  } catch (error) {
+    console.error("Failed to update citizen role:", error);
+  }
 }
 
 async function handleStatus(interaction, userId) {
@@ -96,6 +115,7 @@ async function handleStatus(interaction, userId) {
     .setFooter({ text: citizen ? "You have full access to economy features" : "Pay upkeep to regain citizen privileges" });
 
   if (!citizen) {
+    await setCitizenRole(interaction, false);
     embed.addFields({
       name: "Restrictions",
       value: "• Cannot request loans\n• Businesses produce 25% less income\n• Cannot run for government",
