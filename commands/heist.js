@@ -20,18 +20,18 @@ module.exports = {
 
     // Prevent self-heist
     if (attacker === targetId) {
-      return interaction.reply({
+      return interaction.editReply({
         content: "❌ You can't heist yourself!",
-        ephemeral: true,
+        flags: 64,
       });
     }
 
     // Check cooldown
     const cooldownRemaining = getCooldownSeconds(attacker, "heist");
     if (cooldownRemaining > 0) {
-      return interaction.reply({
+      return interaction.editReply({
         content: `⏳ You're on heist cooldown. Try again in **${cooldownRemaining}s**.`,
-        ephemeral: true,
+        flags: 64,
       });
     }
 
@@ -42,16 +42,16 @@ module.exports = {
     const targetBalance = getBalance(targetId);
 
     if (targetBalance < 500) {
-      return interaction.reply({
+      return interaction.editReply({
         content: `❌ Target doesn't have enough AYD to heist (minimum ₳500).`,
-        ephemeral: true,
+        flags: 64,
       });
     }
 
     if (attackerBalance < 100) {
-      return interaction.reply({
+      return interaction.editReply({
         content: `❌ You need at least ₳100 to attempt a heist.`,
-        ephemeral: true,
+        flags: 64,
       });
     }
 

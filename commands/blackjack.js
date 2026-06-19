@@ -81,16 +81,16 @@ module.exports = {
 
     const cooldownRemaining = getCooldownSeconds(userId, "blackjack");
     if (cooldownRemaining > 0) {
-      return interaction.reply({
+      return interaction.editReply({
         content: `⏳ You're on cooldown. Try again in **${cooldownRemaining}s**.`,
-        ephemeral: true,
+        flags: 64,
       });
     }
 
     if (betAmount <= 0) {
-      return interaction.reply({
+      return interaction.editReply({
         content: "❌ Bet amount must be positive.",
-        ephemeral: true,
+        flags: 64,
       });
     }
 
@@ -98,9 +98,9 @@ module.exports = {
     const lifetimeEarnings = getLifetimeEarnings(userId) || 2500;
 
     if (balance < betAmount) {
-      return interaction.reply({
+      return interaction.editReply({
         content: `❌ You don't have enough AYD. Balance: **₳${balance}**`,
-        ephemeral: true,
+        flags: 64,
       });
     }
 
@@ -110,9 +110,9 @@ module.exports = {
     );
 
     if (betAmount > maxBet) {
-      return interaction.reply({
+      return interaction.editReply({
         content: `❌ Maximum bet is **₳${maxBet}** (25% of your balance or lifetime earnings).`,
-        ephemeral: true,
+        flags: 64,
       });
     }
 
@@ -130,9 +130,9 @@ module.exports = {
       const payout = Math.floor(betAmount * 1.5);
 
       if (govBalance < payout) {
-        return interaction.reply({
+        return interaction.editReply({
           content: "❌ Government doesn't have enough funds to pay out. Try again later.",
-          ephemeral: true,
+          flags: 64,
         });
       }
 
@@ -199,7 +199,7 @@ module.exports = {
     collector.on("collect", async buttonInteraction => {
       const action = buttonInteraction.customId.split("_")[1];
       if (gameState.finished) {
-        return buttonInteraction.reply({ content: "This game is already finished.", ephemeral: true });
+        return buttonInteraction.reply({ content: "This game is already finished.", flags: 64 });
       }
 
       if (action === "hit") {

@@ -77,18 +77,18 @@ module.exports = {
 async function handleRequest(interaction, userId) {
   // Check if user is a citizen
   if (!isCitizen(userId)) {
-    return interaction.reply({
+    return interaction.editReply({
       content: "❌ You must be a citizen to request loans. Pay your upkeep with `/upkeep pay`.",
-      ephemeral: true,
+      flags: 64,
     });
   }
 
   const amount = interaction.options.getInteger("amount");
 
   if (amount <= 0) {
-    return interaction.reply({
+    return interaction.editReply({
       content: "❌ Loan amount must be positive.",
-      ephemeral: true,
+      flags: 64,
     });
   }
 
@@ -98,9 +98,9 @@ async function handleRequest(interaction, userId) {
   const maxLoan = Math.floor(balance * (creditScore / 1000));
 
   if (amount > maxLoan) {
-    return interaction.reply({
+    return interaction.editReply({
       content: `❌ Maximum loan is **₳${maxLoan}** based on your credit score (${creditScore}). You have **₳${balance}**.`,
-      ephemeral: true,
+      flags: 64,
     });
   }
 
@@ -128,55 +128,55 @@ async function handleRepay(interaction, userId) {
   const repayAmount = interaction.options.getInteger("amount");
 
   if (repayAmount <= 0) {
-    return interaction.reply({
+    return interaction.editReply({
       content: "❌ Repayment amount must be positive.",
-      ephemeral: true,
+      flags: 64,
     });
   }
 
   const loan = getLoan(loanId);
 
   if (!loan) {
-    return interaction.reply({
+    return interaction.editReply({
       content: "❌ Loan not found.",
-      ephemeral: true,
+      flags: 64,
     });
   }
 
   if (loan.user_id !== userId) {
-    return interaction.reply({
+    return interaction.editReply({
       content: "❌ This is not your loan.",
-      ephemeral: true,
+      flags: 64,
     });
   }
 
   if (loan.status !== "accepted") {
-    return interaction.reply({
+    return interaction.editReply({
       content: `❌ This loan has not been approved yet (Status: **${loan.status}**).`,
-      ephemeral: true,
+      flags: 64,
     });
   }
 
   if (loan.paid_off === 1) {
-    return interaction.reply({
+    return interaction.editReply({
       content: "❌ This loan has already been paid off.",
-      ephemeral: true,
+      flags: 64,
     });
   }
 
   const balance = getBalance(userId);
 
   if (balance < repayAmount) {
-    return interaction.reply({
+    return interaction.editReply({
       content: `❌ You don't have enough AYD. Balance: **₳${balance}**`,
-      ephemeral: true,
+      flags: 64,
     });
   }
 
   if (repayAmount > loan.amount_owed) {
-    return interaction.reply({
+    return interaction.editReply({
       content: `❌ Repayment exceeds amount owed. Amount owed: **₳${loan.amount_owed}**.`,
-      ephemeral: true,
+      flags: 64,
     });
   }
 
@@ -211,9 +211,9 @@ async function handleList(interaction, userId) {
   const loans = getUserLoans(userId);
 
   if (loans.length === 0) {
-    return interaction.reply({
+    return interaction.editReply({
       content: "✅ You have no active loans.",
-      ephemeral: true,
+      flags: 64,
     });
   }
 
@@ -244,9 +244,9 @@ async function handleAccept(interaction, userId) {
   );
 
   if (!hasDirectorRole) {
-    return interaction.reply({
+    return interaction.editReply({
       content: "❌ You must be a **Director of the National Bank** to accept loans.",
-      ephemeral: true,
+      flags: 64,
     });
   }
 
@@ -254,25 +254,25 @@ async function handleAccept(interaction, userId) {
   const loan = getLoan(loanId);
 
   if (!loan) {
-    return interaction.reply({
+    return interaction.editReply({
       content: "❌ Loan not found.",
-      ephemeral: true,
+      flags: 64,
     });
   }
 
   if (loan.status !== "pending") {
-    return interaction.reply({
+    return interaction.editReply({
       content: `❌ This loan is already **${loan.status}**.`,
-      ephemeral: true,
+      flags: 64,
     });
   }
 
   const govBalance = getGovernmentBalance();
 
   if (govBalance < loan.amount) {
-    return interaction.reply({
+    return interaction.editReply({
       content: `❌ National bank doesn't have enough funds. Available: **₳${govBalance}**.`,
-      ephemeral: true,
+      flags: 64,
     });
   }
 
@@ -310,18 +310,18 @@ async function handlePending(interaction, userId) {
   );
 
   if (!hasDirectorRole) {
-    return interaction.reply({
+    return interaction.editReply({
       content: "❌ You must be a **Director of the National Bank** to view pending loans.",
-      ephemeral: true,
+      flags: 64,
     });
   }
 
   const loans = getPendingLoans();
 
   if (loans.length === 0) {
-    return interaction.reply({
+    return interaction.editReply({
       content: "✅ No pending loan requests.",
-      ephemeral: true,
+      flags: 64,
     });
   }
 

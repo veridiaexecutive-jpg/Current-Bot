@@ -28,35 +28,35 @@ module.exports = {
     // Check cooldown
     const cooldownRemaining = getCooldownSeconds(userId, "dice");
     if (cooldownRemaining > 0) {
-      return interaction.reply({
+      return interaction.editReply({
         content: `⏳ You're on cooldown. Try again in **${cooldownRemaining}s**.`,
-        ephemeral: true,
+        flags: 64,
       });
     }
 
     // Validate bet
     if (betAmount <= 0) {
-      return interaction.reply({
+      return interaction.editReply({
         content: "❌ Bet amount must be positive.",
-        ephemeral: true,
+        flags: 64,
       });
     }
 
     const balance = getBalance(userId);
 
     if (balance < betAmount) {
-      return interaction.reply({
+      return interaction.editReply({
         content: `❌ You don't have enough AYD. Balance: **₳${balance}**`,
-        ephemeral: true,
+        flags: 64,
       });
     }
 
     // Max bet cap
     const maxBet = Math.floor(balance * 0.25);
     if (betAmount > maxBet) {
-      return interaction.reply({
+      return interaction.editReply({
         content: `❌ Maximum bet is **₳${maxBet}** (25% of your wallet).`,
-        ephemeral: true,
+        flags: 64,
       });
     }
 
@@ -72,9 +72,9 @@ module.exports = {
     if (won) {
       // Check if government has enough to pay out
       if (govBalance < payout) {
-        return interaction.reply({
+        return interaction.editReply({
           content: "❌ Government doesn't have enough funds to pay out. Try again later.",
-          ephemeral: true,
+          flags: 64,
         });
       }
       // Player wins - government pays the full 5x

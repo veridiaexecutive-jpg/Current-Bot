@@ -35,17 +35,17 @@ async function handlePay(interaction, userId) {
   const upkeepCost = calculateUpkeepCost(userId);
 
   if (balance < upkeepCost) {
-    return interaction.reply({
+    return interaction.editReply({
       content: `❌ You need **₳${upkeepCost}** to pay upkeep. You have **₳${balance}**.`,
-      ephemeral: true,
+      flags: 64,
     });
   }
 
   const success = payUpkeep(userId);
   if (!success) {
-    return interaction.reply({
+    return interaction.editReply({
       content: "❌ Failed to pay upkeep. Please try again.",
-      ephemeral: true,
+      flags: 64,
     });
   }
 
@@ -63,7 +63,7 @@ async function handlePay(interaction, userId) {
     .setFooter({ text: "Upkeep must be paid every 48 hours to remain a citizen" });
 
   await setCitizenRole(interaction, true);
-  await interaction.reply({ embeds: [embed] });
+  await interaction.editReply({ embeds: [embed] });
 }
 
 async function setCitizenRole(interaction, citizen) {

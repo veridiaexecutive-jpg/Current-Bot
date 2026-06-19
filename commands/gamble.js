@@ -19,17 +19,17 @@ module.exports = {
     // Check cooldown
     const cooldownRemaining = getCooldownSeconds(userId, "gamble");
     if (cooldownRemaining > 0) {
-      return interaction.reply({
+      return interaction.editReply({
         content: `⏳ You're on cooldown. Try again in **${cooldownRemaining}s**.`,
-        ephemeral: true,
+        flags: 64,
       });
     }
 
     // Validate bet
     if (betAmount <= 0) {
-      return interaction.reply({
+      return interaction.editReply({
         content: "❌ Bet amount must be positive.",
-        ephemeral: true,
+        flags: 64,
       });
     }
 
@@ -37,9 +37,9 @@ module.exports = {
     const lifetimeEarnings = getLifetimeEarnings(userId) || 2500;
 
     if (balance < betAmount) {
-      return interaction.reply({
+      return interaction.editReply({
         content: `❌ You don't have enough AYD. Balance: **₳${balance}**`,
-        ephemeral: true,
+        flags: 64,
       });
     }
 
@@ -50,9 +50,9 @@ module.exports = {
     );
 
     if (betAmount > maxBet) {
-      return interaction.reply({
+      return interaction.editReply({
         content: `❌ Maximum bet is **₳${maxBet}** (25% of your current balance or lifetime earnings, whichever is lower).`,
-        ephemeral: true,
+        flags: 64,
       });
     }
 
@@ -66,9 +66,9 @@ module.exports = {
     if (winChance) {
       // Check if government has enough to pay out
       if (govBalance < betAmount) {
-        return interaction.reply({
+        return interaction.editReply({
           content: "❌ Government doesn't have enough funds to pay out. Try again later.",
-          ephemeral: true,
+          flags: 64,
         });
       }
       // Player wins - government pays
@@ -94,6 +94,6 @@ module.exports = {
       )
       .setFooter({ text: "45% win chance | 55% lose chance" });
 
-    await interaction.reply({ embeds: [embed] });
+    await interaction.editReply({ embeds: [embed] });
   }
 };

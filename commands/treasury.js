@@ -62,9 +62,9 @@ async function handleTransfer(interaction, userId) {
   );
 
   if (!hasCoordinatorRole) {
-    return interaction.reply({
+    return interaction.editReply({
       content: "❌ You must be a **National Regional Coordinator** to transfer treasury funds.",
-      ephemeral: true,
+      flags: 64,
     });
   }
 
@@ -73,18 +73,18 @@ async function handleTransfer(interaction, userId) {
   const amount = interaction.options.getInteger("amount");
 
   if (amount <= 0) {
-    return interaction.reply({
+    return interaction.editReply({
       content: "❌ Transfer amount must be positive.",
-      ephemeral: true,
+      flags: 64,
     });
   }
 
   const treasuryBalance = getGovernmentBalance();
 
   if (treasuryBalance < amount) {
-    return interaction.reply({
+    return interaction.editReply({
       content: `❌ Treasury doesn't have enough funds. Balance: ₳${treasuryBalance}`,
-      ephemeral: true,
+      flags: 64,
     });
   }
 

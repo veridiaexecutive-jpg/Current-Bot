@@ -29,6 +29,6 @@ module.exports = {
       .setThumbnail(targetUser.displayAvatarURL())
       .setFooter({ text: "AYD — the official currency" });
 
-    await interaction.reply({ embeds: [embed] });
+    await interaction.editReply({ embeds: [embed] });
   }
 };

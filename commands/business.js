@@ -98,9 +98,9 @@ async function handleBuy(interaction, userId) {
   const business = BUSINESS_TYPES[type];
 
   if (!business) {
-    return interaction.reply({
+    return interaction.editReply({
       content: "❌ Invalid business type.",
-      ephemeral: true,
+      flags: 64,
     });
   }
 
@@ -112,9 +112,9 @@ async function handleBuy(interaction, userId) {
   const nextCost = Math.floor(business.cost * Math.pow(1.4, ownedCount + 1));
 
   if (balance < finalCost) {
-    return interaction.reply({
+    return interaction.editReply({
       content: `❌ You need **₳${finalCost}** to buy a **${business.name}**. You have **₳${balance}**.`,
-      ephemeral: true,
+      flags: 64,
     });
   }
 
@@ -153,9 +153,9 @@ async function handleCollect(interaction, userId) {
   `).all(userId);
 
   if (businesses.length === 0) {
-    return interaction.reply({
+    return interaction.editReply({
       content: "❌ You don't own any businesses.",
-      ephemeral: true,
+      flags: 64,
     });
   }
 
@@ -190,9 +190,9 @@ async function handleCollect(interaction, userId) {
   }
 
   if (totalCollected === 0) {
-    return interaction.reply({
+    return interaction.editReply({
       content: "❌ No businesses are ready to collect. Check `/business list`.",
-      ephemeral: true,
+      flags: 64,
     });
   }
 
@@ -226,9 +226,9 @@ async function handleUpgrade(interaction, userId) {
   `).get(businessId, userId);
 
   if (!business) {
-    return interaction.reply({
+    return interaction.editReply({
       content: "❌ You don't own a business with that ID.",
-      ephemeral: true,
+      flags: 64,
     });
   }
 
@@ -237,9 +237,9 @@ async function handleUpgrade(interaction, userId) {
   const balance = getBalance(userId);
 
   if (balance < upgradeCost) {
-    return interaction.reply({
+    return interaction.editReply({
       content: `❌ Upgrade costs **₳${upgradeCost}**. You have **₳${balance}**.`,
-      ephemeral: true,
+      flags: 64,
     });
   }
 
@@ -274,9 +274,9 @@ async function handleList(interaction, userId) {
   `).all(userId);
 
   if (businesses.length === 0) {
-    return interaction.reply({
+    return interaction.editReply({
       content: "❌ You don't own any businesses. Use `/business buy` to get started!",
-      ephemeral: true,
+      flags: 64,
     });
   }
 

@@ -27,9 +27,9 @@ module.exports = {
     `).all(limit);
 
     if (topPlayers.length === 0) {
-      return interaction.reply({
+      return interaction.editReply({
         content: "❌ No players found with balances.",
-        ephemeral: true,
+        flags: 64,
       });
     }
 

@@ -34,13 +34,15 @@ client.on("interactionCreate", async interaction => {
   }
 
   try {
+    // Defer the interaction to extend the response window from 3s to 15 minutes
+    await interaction.deferReply({ flags: 64 }); // 64 = MessageFlags.Ephemeral
     await command.execute(interaction);
   } catch (error) {
     console.error(error);
     if (interaction.replied || interaction.deferred) {
-      await interaction.followUp({ content: "There was an error while executing this command!", ephemeral: true });
+      await interaction.followUp({ content: "There was an error while executing this command!", flags: 64 });
     } else {
-      await interaction.reply({ content: "There was an error while executing this command!", ephemeral: true });
+      await interaction.reply({ content: "There was an error while executing this command!", flags: 64 });
     }
   }
 });
