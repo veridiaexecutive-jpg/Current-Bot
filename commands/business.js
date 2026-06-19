@@ -104,6 +104,7 @@ async function handleBuy(interaction, userId) {
     });
   }
 
+  const balance = getBalance(userId);
   const ownedCount = db.prepare(
     "SELECT COUNT(*) AS count FROM businesses WHERE owner_id = ? AND type = ?"
   ).get(userId, type).count;
