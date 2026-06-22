@@ -108,6 +108,6 @@ module.exports = {
 
     embed.setFooter({ text: "Higher heist success later with business upgrades!" });
 
-    await interaction.reply({ embeds: [embed] });
+    await interaction.editReply({ embeds: [embed] });
   }
 };

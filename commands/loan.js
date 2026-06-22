@@ -120,7 +120,7 @@ async function handleRequest(interaction, userId) {
     )
     .setFooter({ text: "A National Bank Director will review your request soon" });
 
-  await interaction.reply({ embeds: [embed] });
+  await interaction.editReply({ embeds: [embed] });
 }
 
 async function handleRepay(interaction, userId) {
@@ -204,7 +204,7 @@ async function handleRepay(interaction, userId) {
       { name: "Your New Balance", value: `₳${newBalance}`, inline: false }
     );
 
-  await interaction.reply({ embeds: [embed] });
+  await interaction.editReply({ embeds: [embed] });
 }
 
 async function handleList(interaction, userId) {
@@ -234,7 +234,7 @@ async function handleList(interaction, userId) {
     .addFields(...fields)
     .setFooter({ text: "Use /loan repay to pay back loans" });
 
-  await interaction.reply({ embeds: [embed] });
+  await interaction.editReply({ embeds: [embed] });
 }
 
 async function handleAccept(interaction, userId) {
@@ -300,7 +300,7 @@ async function handleAccept(interaction, userId) {
     )
     .setFooter({ text: "Loan has been disbursed" });
 
-  await interaction.reply({ embeds: [embed] });
+  await interaction.editReply({ embeds: [embed] });
 }
 
 async function handlePending(interaction, userId) {
@@ -342,5 +342,5 @@ async function handlePending(interaction, userId) {
     .addFields(...fields)
     .setFooter({ text: `${loans.length} pending request(s)` });
 
-  await interaction.reply({ embeds: [embed] });
+  await interaction.editReply({ embeds: [embed] });
 }

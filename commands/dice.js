@@ -101,6 +101,6 @@ module.exports = {
       )
       .setFooter({ text: "Win chance: 16.7% | Payout: 5x" });
 
-    await interaction.reply({ embeds: [embed] });
+    await interaction.editReply({ embeds: [embed] });
   }
 };

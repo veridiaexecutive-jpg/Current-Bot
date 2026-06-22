@@ -19,20 +19,20 @@ module.exports = {
     );
 
     if (!hasDirectorRole) {
-      return interaction.reply("You must be a **Director of the National Bank** to use this command.");
+      return interaction.editReply("You must be a **Director of the National Bank** to use this command.");
     }
 
     const amount = interaction.options.getInteger("amount");
 
     if (amount <= 0) {
-      return interaction.reply("Amount must be greater than zero.");
+      return interaction.editReply("Amount must be greater than zero.");
     }
 
     db.prepare(`
       UPDATE national_bank SET balance = balance + ?
     `).run(amount);
 
-    await interaction.reply(
+    await interaction.editReply(
       `💵 **Printed AYD**  
 Added **₳${amount}** to the national bank.`
     );

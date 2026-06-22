@@ -67,6 +67,6 @@ module.exports = {
       .setFooter({ text: "Keep working hard to climb the ranks!" })
       .setTimestamp();
 
-    await interaction.reply({ embeds: [embed] });
+    await interaction.editReply({ embeds: [embed] });
   }
 };

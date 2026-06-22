@@ -123,5 +123,5 @@ async function handleStatus(interaction, userId) {
     });
   }
 
-  await interaction.reply({ embeds: [embed] });
+  await interaction.editReply({ embeds: [embed] });
 }

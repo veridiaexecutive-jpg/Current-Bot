@@ -143,7 +143,7 @@ async function handleBuy(interaction, userId) {
     )
     .setFooter({ text: "Use /business list to see all your businesses" });
 
-  await interaction.reply({ embeds: [embed] });
+  await interaction.editReply({ embeds: [embed] });
 }
 
 async function handleCollect(interaction, userId) {
@@ -215,7 +215,7 @@ async function handleCollect(interaction, userId) {
     )
     .setFooter({ text: "Taxes support the national treasury!" });
 
-  await interaction.reply({ embeds: [embed] });
+  await interaction.editReply({ embeds: [embed] });
 }
 
 async function handleUpgrade(interaction, userId) {
@@ -264,7 +264,7 @@ async function handleUpgrade(interaction, userId) {
       { name: "Your Balance", value: `₳${newBalance}`, inline: false }
     );
 
-  await interaction.reply({ embeds: [embed] });
+  await interaction.editReply({ embeds: [embed] });
 }
 
 async function handleList(interaction, userId) {
@@ -312,5 +312,5 @@ async function handleList(interaction, userId) {
     .addFields(...fields)
     .setFooter({ text: "Use /business collect to earn money from ready businesses" });
 
-  await interaction.reply({ embeds: [embed] });
+  await interaction.editReply({ embeds: [embed] });
 }

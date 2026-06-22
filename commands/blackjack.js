@@ -154,7 +154,7 @@ module.exports = {
         )
         .setFooter({ text: "Natural blackjack! 1.5x payout" });
 
-      return interaction.reply({ embeds: [embed] });
+      return interaction.editReply({ embeds: [embed] });
     }
 
     const gameState = {
@@ -189,7 +189,7 @@ module.exports = {
       )
       .setFooter({ text: "Choose your action" });
 
-    const message = await interaction.reply({ embeds: [embed], components: [row], fetchReply: true });
+    const message = await interaction.editReply({ embeds: [embed], components: [row] });
 
     const collector = message.createMessageComponentCollector({
       filter: i => i.user.id === userId && i.customId.startsWith("blackjack_"),

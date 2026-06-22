@@ -22,6 +22,6 @@ module.exports = {
       )
       .setFooter({ text: "Use these metrics to understand the AYD economy." });
 
-    await interaction.reply({ embeds: [embed] });
+    await interaction.editReply({ embeds: [embed] });
   }
 };

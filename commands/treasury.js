@@ -52,7 +52,7 @@ async function handleBalance(interaction) {
     )
     .setFooter({ text: "Treasury funds support the national economy" });
 
-  await interaction.reply({ embeds: [embed] });
+  await interaction.editReply({ embeds: [embed] });
 }
 
 async function handleTransfer(interaction, userId) {
@@ -108,5 +108,5 @@ async function handleTransfer(interaction, userId) {
     )
     .setFooter({ text: "Transfer completed by government directive" });
 
-  await interaction.reply({ embeds: [embed] });
+  await interaction.editReply({ embeds: [embed] });
 }

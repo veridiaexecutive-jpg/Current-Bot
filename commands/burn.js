@@ -19,13 +19,13 @@ module.exports = {
     );
 
     if (!hasDirectorRole) {
-      return interaction.reply("You must be a **Director of the National Bank** to use this command.");
+      return interaction.editReply("You must be a **Director of the National Bank** to use this command.");
     }
 
     const amount = interaction.options.getInteger("amount");
 
     if (amount <= 0) {
-      return interaction.reply("Amount must be greater than zero.");
+      return interaction.editReply("Amount must be greater than zero.");
     }
 
     const bank = db.prepare(`
@@ -33,14 +33,14 @@ module.exports = {
     `).get();
 
     if (bank.balance < amount) {
-      return interaction.reply("The national bank does not have enough AYD to burn that amount.");
+      return interaction.editReply("The national bank does not have enough AYD to burn that amount.");
     }
 
     db.prepare(`
       UPDATE national_bank SET balance = balance - ?
     `).run(amount);
 
-    await interaction.reply(
+    await interaction.editReply(
       `🔥 **Burned AYD**  
 Removed **₳${amount}** from the national bank.`
     );
